@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dosen;
+use App\Http\Controllers\LaporanCotroller;
 use App\Http\Controllers\Staf;
 
 Route::get('/', function () {
@@ -19,3 +20,7 @@ Route::get('/dosen/proses', [Dosen::class, 'proses']);
 Route::get('/dosen/proses1', [Dosen::class, 'proses1']);
 Route::get('/dosen/proses2', [Dosen::class, 'proses2']);
 Route::get('/staf', [Staf::class, 'index']);
+
+Route::get('/laporan', [LaporanCotroller::class,'index'])->name('laporan');
+Route::get('/laporan/proses/{id}', [LaporanCotroller::class,'proses'])->name('laporan-proses');
+Route::get('/laporan/solo', [LaporanCotroller::class,'solo'])->name('solo');

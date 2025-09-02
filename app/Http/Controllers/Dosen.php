@@ -60,10 +60,10 @@ class Dosen extends Controller
         AbsenDosen::truncate();
         foreach ($data_user as $val) {
             $data = UserDosen::where('userid',$val['userid']);
-            if (!$data->first()) {
+            // if (!$data->first()) {
                 $data = ['userid' => $val['userid'], 'name' => $val['name'] ];
                 UserDosen::create($data);
-            }
+            // }
         }
         $tmp1 = collect($data_dosen)->where('timestamp','>=',Carbon::create($tahun,$bulan-2,1)->format('Y-m-d'))
             ->where('timestamp','<=',Carbon::create($tahun,$bulan,$jumlah_tgl_N)->add(1,'day')->format('Y-m-d'));
@@ -201,14 +201,15 @@ class Dosen extends Controller
     }
     public function proses2()
     {
-        $zk = new ZKTeco('192.168.254.26');
+        // $zk = new ZKTeco('192.168.254.26');
+        $zk = new ZKTeco('192.168.19.2');
         $zk->connect();
         $zk->enableDevice();
         $attendance = $zk->getAttendance();
-        $user = $zk->getUser(); 
         $data = json_encode($attendance);
-        $user = json_encode($user);
         File::put('Absen/data_staf.txt', $data);
+        $user = $zk->getUser(); 
+        $user = json_encode($user);
         File::put('Absen/user_staf.txt', $user);
     }
 }

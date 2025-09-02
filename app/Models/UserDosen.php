@@ -25,6 +25,17 @@ class UserDosen extends Model
                         // ->where('waktu','>=',date('Y').'-'.(date('m')-3).'-21')
                         // ->where('waktu','<=',date('Y').'-'.(date('m')).'-'.$jumlah_tgl)->orderBy('waktu','asc');
     }
+    public function solo()
+    {
+        
+        $tanggal = 17;
+        $bulan = 8;
+        $tahun = 2025;
+        return $this->hasOne(AbsenDosen::class, 'id_pegawai', 'userid')
+                        ->where('waktu','>',Carbon::create($tahun, $bulan, $tanggal)->format('Y-m-d'))
+                        ->where('waktu','<',Carbon::create($tahun, $bulan, $tanggal+1)->format('Y-m-d'));
+                        // ->where('waktu','<=',date('Y').'-'.(date('m')).'-'.$jumlah_tgl)->orderBy('waktu','asc');
+    }
     public function absen_pegawai_2()
     {
         return $this->hasMany(AbsenDosen::class, 'id_pegawai', 'userid')
